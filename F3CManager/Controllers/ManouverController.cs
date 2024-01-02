@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace F3CManager.AddControllers
+namespace F3CManager.Controllers
 {
     /// <summary>
     /// Manouvers.

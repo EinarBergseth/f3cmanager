@@ -1,27 +1,43 @@
 using System.Globalization;
 using System.Xml.XPath;
+using DataAccess;
+using F3CManager.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace F3CManager
 {
+    /// <summary>
+    /// Startup configuration.
+    /// </summary>
     public class Startup
     {
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
         private IWebHostEnvironment? WebHostEnvironment { get; set; }
+        
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        // Use this method to add services to the container.
+        /// <summary>
+        /// Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IEventServices, EventServices>();
+
             ConfigureAuthentication(services);
 
             services.AddControllers(options =>
@@ -47,6 +63,8 @@ namespace F3CManager
 
             services.AddHttpClient();
             //services.AddCustomHttpContextAccessor();
+
+            ConfigureDatabaseServices(services);
 
             services.AddSwaggerGen(options =>
             {
@@ -108,6 +126,44 @@ namespace F3CManager
                 };
             });
         }
+
+        /// <summary>
+        /// This is virtual so we can inject custom database services in tests.
+        /// </summary>
+        /// <param name="services"></param>
+        protected virtual void ConfigureDatabaseServices(IServiceCollection services)
+        {
+            //string sqlConnectionString;
+
+            // if (Configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT") == "Development")
+            // {
+            //     sqlConnectionString = Configuration.GetConnectionString("SqlConnectionString");
+            //     if (String.IsNullOrWhiteSpace(sqlConnectionString))
+            //     {
+            //         sqlConnectionString = GetSqlConnectionStringFromKeyVault();
+            //     }
+            // }
+            // else
+            // {
+            //     sqlConnectionString = GetSqlConnectionStringFromKeyVault();
+            // }
+
+            var sqlConnectionString = Configuration.GetConnectionString("SqlConnectionString");
+
+            if (String.IsNullOrWhiteSpace(sqlConnectionString))
+            {
+                throw new Exception("SQL connection string was empty!");
+            }
+
+            services.AddDbContext<DataContext>(options =>
+            {
+                options.UseSqlServer(sqlConnectionString);
+                //options.UseLazyLoadingProxies().UseSqlServer(sqlConnectionString);
+                //Only use this for debug purposes (https://learn.microsoft.com/nb-no/ef/core/querying/single-split-queries):
+                //options.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
+            });
+        }
+
 
         /// <summary>
         /// Use this method to configure the HTTP request pipeline.

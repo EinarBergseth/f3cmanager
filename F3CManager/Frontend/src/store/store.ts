@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { manouversApi } from '../features/manouvers'
+import { eventApi } from '../features/events'
 
 const store = configureStore({
     reducer: {
       //RTK Query reducers in alphabetical order:
+      [eventApi.reducerPath]: eventApi.reducer,
       [manouversApi.reducerPath]: manouversApi.reducer,
 
       //RTK Slice reducers in alphabetical order:
@@ -16,6 +18,7 @@ const store = configureStore({
             serializableCheck: false,
         })
         //RTK Query middleware in alphabetical order:
+        .concat(eventApi.middleware)
         .concat(manouversApi.middleware)
 })
 

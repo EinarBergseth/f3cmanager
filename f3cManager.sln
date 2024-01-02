@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "F3CManager", "F3CManager\F3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{220B0160-B7B9-4F83-B2A4-4057EA531951}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess.Tests", "DataAccess.Tests\DataAccess.Tests.csproj", "{B08C726B-57C9-48C1-9771-D86A1CDD65BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{220B0160-B7B9-4F83-B2A4-4057EA531951}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{220B0160-B7B9-4F83-B2A4-4057EA531951}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{220B0160-B7B9-4F83-B2A4-4057EA531951}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B08C726B-57C9-48C1-9771-D86A1CDD65BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B08C726B-57C9-48C1-9771-D86A1CDD65BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B08C726B-57C9-48C1-9771-D86A1CDD65BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B08C726B-57C9-48C1-9771-D86A1CDD65BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

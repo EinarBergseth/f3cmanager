@@ -1,8 +1,14 @@
 namespace F3CManager
 {
-
+    /// <summary>
+    /// Program entry point.
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Main entry point.
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
